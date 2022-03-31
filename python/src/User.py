@@ -22,8 +22,5 @@ class User:
 
         # If the use choses to volunteer get a random job for them to do, and
         # add it to there user object
-        if self.volunteer == True:
-            areas = []
-            for i in areasToVolunteer:
-                areas.append(i)
-            self.areaVolunteering = random.choice(areas)
+        if self.volunteer:
+            self.areaVolunteering = random.choice(list(areasToVolunteer))

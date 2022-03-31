@@ -34,7 +34,7 @@ export default class User implements IUser {
         this.paying = paying
         this.volunteer = volunteer
 
-        if (this.volunteer === true) {
+        if (this.volunteer) {
             // Select a random choice from the enum
              const enumValues = Object.keys(AreasToVolunteer)
             .map(n => Number.parseInt(n))
