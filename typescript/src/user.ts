@@ -52,7 +52,7 @@ export default class User implements IUser {
 
         this.users.push(user);
 
-        appendFile("./users.json", `${user}\n`, function(err) {
+        appendFile("./users.json", `${user}\n`, function(err: Error) {
             if (err) throw err;
             return;
         })
