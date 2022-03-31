@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import IntFlag
+import random
 
 class areasToVolunteer(IntFlag):
     entrance_gate = 0
@@ -20,7 +21,8 @@ class User:
         self.volunteer = volunteer
 
         if self.volunteer == True:
-            # Get a random item from the areas where the user can volunteer
+            areas = []
             for i in areasToVolunteer:
-                print(i)
-            # self.areaVolunteering
+                areas.append(i)
+            self.areaVolunteering = random.choice(areas)
+            print(self.areaVolunteering)

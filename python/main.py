@@ -1,15 +1,8 @@
-from src import User
+from src import User, fullName
 
-fristName: str = input("What is your first name? ")
+firstName: str = input("What is your first name? ")
 lastName: str = input("What is your last name? ")
 
-class FullName:
-    def __init__(self, firstName: str, lastName: str):
-        self.firstName = firstName
-        self.lastName = lastName
+fullname = fullName(firstName, lastName)
 
-def makeFullName(firstName: str, lastName: str) -> FullName:
-    fullName = FullName(firstName, lastName)
-    return fullName
-
-user = User(makeFullName(firstName, lastName), "420", True, True)
+user = User(fullname, "420", True, True)
