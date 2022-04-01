@@ -1,18 +1,20 @@
 from dataclasses import dataclass, asdict
 from enum import IntEnum
-import random
+from random import choice
 import json
 
+from .Utils import getCurrentDate
+
 class areasToVolunteer(IntEnum):
-    unspecified = 0
+    none = 0
     entrance_gate = 1
     gift_shop = 2
     painting_decorating = 3
 
 @dataclass
 class fullName:
-    firstName: str
-    lastName: str
+    first_name: str
+    last_name: str
 
 @dataclass
 class User:
@@ -22,34 +24,47 @@ class User:
     volunteer: bool
     areaVolunteering: areasToVolunteer
 
-    def __init__(self, *, name: fullName, signUpDate: str, paying: bool, volunteer: bool):
-        self.name = name
-        self.signUpDate = signUpDate
-        self.paying = paying
-        self.volunteer = volunteer
+    @staticmethod
+    def validate_name(s: str) -> bool:
+        return len(s) > 1
 
-        # If the use choses to volunteer get a random job for them to do, and
-        # add it to there user object
-        if self.volunteer:
-            self.areaVolunteering = random.choice(list(areasToVolunteer)[1:])
-        else:
-            # If the user is not volunteering then make sure areasToVolunteer is asgined to the unspecified option
-            self.areaVolunteering = areasToVolunteer.unspecified
+    @staticmethod
+    def validate_bool(s: str) -> bool:
+        return s.lower() in {"yes", "no", "y", "n"}
 
-    def saveUser(self, user):
-        # Convert the user object to a json string
-        json_strings = json.dumps(asdict(user))
-        # Dump that bad boy into the json file "users.json"
-        f = open("./users.json", "a")
-        f.write(json_strings)
-        f.close()
+    @staticmethod
+    def get_input(message: str, valid):
+        while True:
+            response = input(f"{message}\n")
+            if valid(response):
+                return response
+            print("Invalid input, please answer again!")
 
-    def getUsers(self):
-        json_string = open("./users.json", "r")
-        json_object = json.loads(json_string.read())
-        print("That json object gurlll", json_object)
+    @staticmethod
+    def new_user():
+        first_name: str = User.get_input("What is your first name?", User.validate_name)
+        last_name: str = User.get_input("What is your last name?", User.validate_name)
 
-        # use ** magic to pass all keyword-arguments immediately, way smarter
-        print("user", User(**json_object))
-        back_from_json: User = User(**json_object)
-        print(back_from_json)
+        fullname = fullName(first_name=first_name, last_name=last_name)
+
+        volunteer: bool = User.get_input("Would you like to volunteer? (yes/no)", User.validate_bool).lower() in "yes"
+        pay: bool = User.get_input("Would you like to pay now? (yes/no)", User.validate_bool).lower() in "yes"
+        areaVolunteering: areasToVolunteer = choice(list(areasToVolunteer)[1:]) if pay else areasToVolunteer.none
+
+        return User(fullname, getCurrentDate(), pay, volunteer, areaVolunteering)
+
+    @staticmethod
+    def save_to_json(user):
+        json_string = json.dumps(asdict(user))
+
+        print(json_string, file=open("./users.json", "a"))
+
+    @staticmethod
+    def get_json():
+        with open("./users.json", "r") as json_lines:
+            content = json_lines.readlines()
+            if content != None:
+                for i in content:
+                    json_object = json.loads(i)
+                    back_from_json: User = User(**json_object)
+                    print(back_from_json)
