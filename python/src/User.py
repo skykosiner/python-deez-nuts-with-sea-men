@@ -1,6 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from enum import IntEnum
 import random
+import json
 
 class areasToVolunteer(IntEnum):
     entrance_gate = 1
@@ -24,3 +25,8 @@ class User:
         # add it to there user object
         if self.volunteer:
             self.areaVolunteering = random.choice(list(areasToVolunteer))
+
+    def saveUser(self, user):
+        print(user)
+        json_strings = json.dumps(asdict(user))
+        print(json_strings)
