@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-from dataclasses import dataclass
+
 from src import User, fullName, getCurrentDate
-from typing import Union
 
 def validateName(s: str) -> bool:
     return len(s) > 1
@@ -36,10 +35,8 @@ def ask_for_inputs():
     ).lower() in "yes"
 
     fullname = fullName(firstName, lastName)
-    user = User(name=fullname, signUpDate=getCurrentDate(), volunteer=volunteer, paying=pay)
-    print(user.signUpDate)
-    print("user", user)
     return User(name=fullname, signUpDate=getCurrentDate(), volunteer=volunteer, paying=pay)
 
 user: User = ask_for_inputs()
+user.getUsers()
 user.saveUser(user)

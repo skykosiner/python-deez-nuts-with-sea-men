@@ -1,0 +1,1 @@
+- [ ] ./src/User.py:53 - User class does not expect the value areasToVolunteer, it asigns it later, need to make sure that if the user has been saved before and we're adding it back that it does not go mad about this
