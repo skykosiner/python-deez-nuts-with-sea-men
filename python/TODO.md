@@ -1,1 +1,2 @@
-- [ ] ./src/User.py:53 - User class does not expect the value areasToVolunteer, it asigns it later, need to make sure that if the user has been saved before and we're adding it back that it does not go mad about this
+- [x] ./src/User.py:53 - User class does not expect the value areasToVolunteer, it asigns it later, need to make sure that if the user has been saved before and we're adding it back that it does not go mad about this
+- [x] In the function where I check there is no duplicates with the name, the first_name and the last_name is not being parsed correctly to python. So `i.name == user.name`, will not work as i.name is equal to just a string

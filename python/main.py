@@ -3,6 +3,5 @@
 from src import User
 
 user: User = User.new_user()
-
-user.get_json()
+print("User", user)
 user.save_to_json(user)

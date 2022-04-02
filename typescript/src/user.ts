@@ -21,14 +21,9 @@ export interface IUser {
 
 export default class User implements IUser {
     public users: IUser[] = [];
-
-    public name: fullName
-    public signUpDate: string
-    public paying: boolean
-    public volunteer: boolean
     public volunteeringAt: AreasToVolunteer
 
-    constructor(name: fullName, signUpDate: string, paying: boolean, volunteer: boolean) {
+    constructor(public name: fullName, public signUpDate: string, public paying: boolean, public volunteer: boolean) {
         this.name = name
         this.signUpDate = signUpDate
         this.paying = paying

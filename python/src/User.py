@@ -1,6 +1,7 @@
 from dataclasses import dataclass, asdict
 from enum import IntEnum
 from random import choice
+from random import randint
 import json
 
 from .Utils import getCurrentDate
@@ -51,7 +52,28 @@ class User:
         pay: bool = User.get_input("Would you like to pay now? (yes/no)", User.validate_bool).lower() in "yes"
         areaVolunteering: areasToVolunteer = choice(list(areasToVolunteer)[1:]) if pay else areasToVolunteer.none
 
-        return User(fullname, getCurrentDate(), pay, volunteer, areaVolunteering)
+        user = User(fullname, getCurrentDate(), pay, volunteer, areaVolunteering)
+
+        return User.check_user_dup(user)
+
+    @staticmethod
+    def check_user_dup(user):
+        users = []
+        with open("./users.json", "r") as json_lines:
+            content = json_lines.readlines()
+            for i in content:
+                json_object = json.loads(i)
+                back_from_json: User = User(**json_object)
+                fullname: fullName = fullName(**json_object["name"])
+                back_from_json.name = fullname
+                users.append(back_from_json)
+
+        for i in users:
+            if i.name == user.name:
+                print("Sorry, that users allready exists")
+                return User.new_user()
+            else:
+                return user
 
     @staticmethod
     def save_to_json(user):
@@ -60,11 +82,5 @@ class User:
         print(json_string, file=open("./users.json", "a"))
 
     @staticmethod
-    def get_json():
-        with open("./users.json", "r") as json_lines:
-            content = json_lines.readlines()
-            if content != None:
-                for i in content:
-                    json_object = json.loads(i)
-                    back_from_json: User = User(**json_object)
-                    print(back_from_json)
+    def get_working_area(workingAreaValue: areasToVolunteer):
+        return areasToVolunteer(workingAreaValue)
