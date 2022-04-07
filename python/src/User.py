@@ -1,10 +1,11 @@
 from dataclasses import dataclass, asdict
+# import datetime
 from enum import IntEnum
 from random import choice
-from random import randint
 import json
+from .Date import Date
 
-from .Utils import getCurrentDate
+from .Utils import get_current_date, over_a_year
 
 class areasToVolunteer(IntEnum):
     none = 0
@@ -18,12 +19,18 @@ class fullName:
     last_name: str
 
 @dataclass
+class Subscription:
+    last_paid: Date
+
+@dataclass
 class User:
+    # TODO: add in yearly subscription logic
     name: fullName
-    signUpDate: str
+    sign_up_date: Date
     paying: bool
     volunteer: bool
-    areaVolunteering: areasToVolunteer
+    area_volunteering: areasToVolunteer
+    subscritpion: Subscription
 
     @staticmethod
     def validate_name(s: str) -> bool:
@@ -52,7 +59,11 @@ class User:
         pay: bool = User.get_input("Would you like to pay now? (yes/no)", User.validate_bool).lower() in "yes"
         areaVolunteering: areasToVolunteer = choice(list(areasToVolunteer)[1:]) if pay else areasToVolunteer.none
 
-        user = User(fullname, getCurrentDate(), pay, volunteer, areaVolunteering)
+        subscription = Subscription(get_current_date())
+
+        # If paying is not true then just say they have never payed even if there is a date there
+
+        user = User(fullname, get_current_date(), pay, volunteer, areaVolunteering, subscription)
 
         return User.check_user_dup(user)
 
@@ -64,16 +75,21 @@ class User:
             for i in content:
                 json_object = json.loads(i)
                 back_from_json: User = User(**json_object)
+
+                # Make sure the name is formated correctly in the object
                 fullname: fullName = fullName(**json_object["name"])
                 back_from_json.name = fullname
+
+                subscription: Subscription = Subscription(last_paid=Date(**json_object["subscritpion"]["last_paid"]))
+                back_from_json.subscritpion = subscription
+
                 users.append(back_from_json)
 
         for i in users:
             if i.name == user.name:
                 print("Sorry, that users allready exists")
                 return User.new_user()
-            else:
-                return user
+        return user
 
     @staticmethod
     def save_to_json(user):
@@ -84,3 +100,10 @@ class User:
     @staticmethod
     def get_working_area(workingAreaValue: areasToVolunteer):
         return areasToVolunteer(workingAreaValue)
+
+    def subscription_expired(self) -> bool:
+        # Check if it has been over a year since the user payed
+        if not self.subscritpion.last_paid.day == 0:
+            print("testing 1234")
+            return over_a_year(self.subscritpion.last_paid)
+        return False

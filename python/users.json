@@ -1,3 +1,1 @@
-{"name": {"first_name": "yoni", "last_name": "kosiner"}, "signUpDate": "04-01-22", "paying": false, "volunteer": true, "areaVolunteering": 0}
-{"name": {"first_name": "Duck", "last_name": "Booba"}, "signUpDate": "04-01-22", "paying": false, "volunteer": false, "areaVolunteering": 0}
-{"name": {"first_name": "Test", "last_name": "boob"}, "signUpDate": "04-02-22", "paying": false, "volunteer": false, "areaVolunteering": 0}
+{"name": {"first_name": "yoni", "last_name": "kosiner"}, "sign_up_date": {"month": 3, "day": 6, "year": 2021}, "paying": true, "volunteer": true, "area_volunteering": 3, "subscritpion": {"last_paid": {"month": 4, "day": 7, "year": 2022}}}

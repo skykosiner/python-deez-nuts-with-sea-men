@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-from src import User
+from src import User, Members
 
-user: User = User.new_user()
-print("User", user)
-user.save_to_json(user)
+# user: User = User.new_user()
+# user.save_to_json(user)
+
+members = Members()
+members.subscription_expired()
