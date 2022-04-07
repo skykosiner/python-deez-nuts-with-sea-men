@@ -4,27 +4,6 @@ import askInput from "./askInput";
 import { currentDate } from "./getCurrentDate";
 import User, { fullName } from "./user";
 
-interface Date {
-    month: number
-    day: number
-    year: number
-}
-
-interface Subscription {
-    lastPaied: Date
-}
-
-const subscription: Subscription = {
-    lastPaied: {
-        month: 12,
-        day: 25,
-        year: 2021
-    }
-}
-
-if (subscription.lastPaied.year > new Date().getFullYear()) {
-}
-
 async function main() {
     const firstName = await askInput("What is your first name? ");
     const lastName = await askInput("What is your last name? ");
