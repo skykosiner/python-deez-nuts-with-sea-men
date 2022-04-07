@@ -1,1 +1,2 @@
-{"name": {"first_name": "yoni", "last_name": "kosiner"}, "sign_up_date": {"month": 3, "day": 6, "year": 2021}, "paying": true, "volunteer": true, "area_volunteering": 3, "subscritpion": {"last_paid": {"month": 4, "day": 7, "year": 2022}}}
+{"name": {"first_name": "yoni", "last_name": "kosiner"}, "sign_up_date": {"month": 4, "day": 7, "year": 2022}, "paying": false, "volunteer": false, "area_volunteering": 0, "subscritpion": {"last_paid": {"month": 4, "day": 7, "year": 2022}}}
+{"name": {"first_name": "bob", "last_name": "jeff"}, "sign_up_date": {"month": 4, "day": 7, "year": 2022}, "paying": true, "volunteer": true, "area_volunteering": 3, "subscritpion": {"last_paid": {"month": 4, "day": 7, "year": 2022}}}

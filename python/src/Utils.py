@@ -1,7 +1,4 @@
-# from datetime import datetime
 import datetime
-
-# date_return = datetime.date
 
 from .User import Date
 

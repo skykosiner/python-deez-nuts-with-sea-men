@@ -104,6 +104,5 @@ class User:
     def subscription_expired(self) -> bool:
         # Check if it has been over a year since the user payed
         if not self.subscritpion.last_paid.day == 0:
-            print("testing 1234")
             return over_a_year(self.subscritpion.last_paid)
         return False

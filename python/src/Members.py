@@ -3,6 +3,7 @@ import json
 from typing import List
 from .User import User, fullName, areasToVolunteer, Subscription
 from .Date import Date
+from .Utils import get_current_date
 
 class Members:
     def __init__(self):
@@ -32,17 +33,21 @@ class Members:
         notPaying = []
         for i in self.users:
             if not i.paying:
-                notPaying.append(i)
+                fullname = f"{i.name.first_name} {i.name.last_name}"
+                notPaying.append(fullname)
 
-        return notPaying
+        for i in notPaying:
+            print(i)
 
     def get_volunteering_members(self):
         volunteers = []
         for i in self.users:
             if i.volunteer:
-                volunteers.append(i)
+                fullname = f"{i.name.first_name} {i.name.last_name}"
+                volunteers.append(fullname)
 
-        return volunteers
+        for i in volunteers:
+            print(i)
 
     # This works with any of the three areas, you just pass in
     # areasToVolunteer.painting_decorating or any other area one can volunteer
@@ -50,9 +55,11 @@ class Members:
         volunters = []
 
         for i in self.users:
-            if i.areaVolunteering == area:
-                volunters.append(i)
-        return volunters
+            if i.area_volunteering == area:
+                fullname = f"{i.name.first_name} {i.name.last_name}"
+                volunters.append(fullname)
+        for i in volunters:
+            print(i)
 
     def subscription_expired(self):
         for i in self.users:
