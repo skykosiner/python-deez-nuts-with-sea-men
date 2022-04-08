@@ -17,7 +17,6 @@ func areaToVolunteer(volunteer bool) AreasToVolunteer {
     return None
 }
 
-
 func (u *User) NewUser() bool {
     firstName := utils.AskForInput("Enter your first name? ")
     lastName := utils.AskForInput("Enter your last name? ")
@@ -36,16 +35,25 @@ func (u *User) NewUser() bool {
     return true
 }
 
-func (u *User) saveUser(user User) error {
+func (u *User) saveUser(user User) {
     b, err := json.Marshal(user)
 
     if err != nil {
-        fmt.Println(err)
+        log.Fatal(err)
     }
 
-    fmt.Println(string(b))
+    f, err := os.OpenFile("./users.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
 
-    return os.WriteFile("./users.json", []byte(b), 0600)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    if _, err := f.Write([]byte(fmt.Sprintf("%s\n", b))); err != nil {
+        log.Fatal(err)
+    }
+    if err := f.Close(); err != nil {
+        log.Fatal(err)
+    }
 }
 
 func (u *User) getAllUsers() []User {
