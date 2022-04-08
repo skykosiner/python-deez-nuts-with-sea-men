@@ -1,0 +1,12 @@
+{
+    {
+        "name": {
+            "firstName":"yoni\n",
+            "lastName":"kosiner\n"
+        },
+        "signUpDate":"08-04-22",
+        "paying":false,
+        "volunteer":false,
+        "AreaToVolunteer":0
+    }
+}

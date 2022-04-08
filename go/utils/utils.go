@@ -44,13 +44,18 @@ func validateInput(input string) bool {
 }
 
 func GetCurrentDate() string {
-    return time.Now().Format("DD-MM-YY")
+    return time.Now().Format("02-01-06")
 }
 
 func StringToBoolean(value string) bool {
-    if value == "yes" || value == "y" {
+    // wait you're not suposed to indent this? This just feels wrong, but hey
+    // if the go people say so I guess
+    switch value {
+    case "yes", "y":
         return true
-    } else if value == "no" || value == "n" {
+    case "no", "n":
         return false
     }
+
+    return false
 }
