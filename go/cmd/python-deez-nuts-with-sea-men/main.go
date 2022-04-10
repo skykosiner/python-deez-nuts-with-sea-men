@@ -6,5 +6,7 @@ import (
 
 func main() {
     var u *user.User
-    u.NewUser()
+
+    user := u.NewUser()
+    u.SaveUser(user)
 }

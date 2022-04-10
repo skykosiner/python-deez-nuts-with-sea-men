@@ -6,36 +6,52 @@ import (
 	"fmt"
 	"log"
 	"os"
+    "math/rand"
+    "time"
 
 	"github.com/yonikosiner/python-deez-nuts-with-sea-men/utils"
 )
 
 func areaToVolunteer(volunteer bool) AreasToVolunteer {
     if volunteer {
+        areas := [3]string{"EntranceGate", "GiftShop", "PaintingDecorating"}
+
+        rand.Seed(time.Now().UnixNano())
+
+        chosen := areas[rand.Intn(len(areas))]
+
+        switch chosen {
+        case "EntranceGate":
+            return EntranceGate
+        case "GiftShop":
+            return GiftShop
+        case "PaintingDecorating":
+            return PaintingDecorating
+        default:
+            log.Fatal("Sorry there was an error, please try again: areaToVolunteer")
+        }
     }
 
     return None
 }
 
-func (u *User) NewUser() bool {
+func (u *User) NewUser() User {
     firstName := utils.AskForInput("Enter your first name? ")
     lastName := utils.AskForInput("Enter your last name? ")
 
-    paying := utils.StringToBoolean(utils.AskForInput("Would you like to pay now? (yes/no) "))
-    volunteer := utils.StringToBoolean(utils.AskForInput("Would you like to volunteer? (yes/no) "))
+    paying := utils.AskForInput("Would you like to pay now? (yes/no) ")
+    payingBool := utils.StringToBoolean(paying)
+
+    volunteer := utils.AskForInput("Would you like to volunteer? (yes/no) ")
+    volunteerBool := utils.StringToBoolean(volunteer)
 
     fullname := &FullName{firstName, lastName}
-    user := &User{*fullname, utils.GetCurrentDate(), paying, volunteer, areaToVolunteer(volunteer)}
+    user := &User{*fullname, utils.GetCurrentDate(), payingBool, volunteerBool, areaToVolunteer(volunteerBool)}
 
-    fmt.Println(user)
-
-    user.saveUser(*user)
-    fmt.Print(user.getAllUsers())
-
-    return true
+    return u.checkUserDup(*user)
 }
 
-func (u *User) saveUser(user User) {
+func (u *User) SaveUser(user User) {
     b, err := json.Marshal(user)
 
     if err != nil {
@@ -56,7 +72,7 @@ func (u *User) saveUser(user User) {
     }
 }
 
-func (u *User) getAllUsers() []User {
+func (u *User) GetAllUsers() []User {
     b, err := os.Open("./users.json")
 
     if err != nil {
@@ -74,37 +90,31 @@ func (u *User) getAllUsers() []User {
 
     b.Close()
 
-    var data []User
+    var users []User
 
     for _, value := range text {
-        fmt.Println(value)
+        var data User
         err := json.Unmarshal([]byte(value), &data)
 
         if err != nil {
             log.Fatal(err)
         }
+
+        users = append(users, data)
     }
 
-    return data
+    return users
 }
 
-func (u *User) checkUserDup(user User) bool {
-    b, err := os.Open("./users.json")
+func (u *User) checkUserDup(user User) User {
+    users := u.getAllUsers()
 
-    if err != nil {
-        log.Fatal(err)
+    for _, value := range users {
+        if user.Name == value.Name {
+            log.Fatal("Sorry that user is already in our database")
+            return u.NewUser()
+        }
     }
 
-    scanner := bufio.NewScanner(b)
-    scanner.Split(bufio.ScanLines)
-
-    var text []string
-
-    for scanner.Scan() {
-        text = append(text, scanner.Text())
-    }
-
-    b.Close()
-
-    return true
+    return user
 }

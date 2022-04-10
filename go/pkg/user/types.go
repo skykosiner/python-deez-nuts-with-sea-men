@@ -4,7 +4,7 @@ type AreasToVolunteer int
 
 const (
     None AreasToVolunteer = iota
-    EntranceGate = 1
+    EntranceGate
     GiftShop
     PaintingDecorating
 )

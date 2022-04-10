@@ -23,6 +23,7 @@ class Members:
                 fullname: fullName = fullName(**json_object["name"])
                 back_from_json.name = fullname
 
+                # Make sure the subscription object is formated correctly in the object
                 subscription: Subscription = Subscription(last_paid=Date(**json_object["subscritpion"]["last_paid"]))
                 back_from_json.subscritpion = subscription
 

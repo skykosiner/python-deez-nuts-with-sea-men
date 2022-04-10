@@ -3,12 +3,14 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"time"
 )
 
 func AskForInput(message string) string {
     stringToReturn := ""
+
     for {
         reader := bufio.NewReader(os.Stdin)
         fmt.Printf("%s \n", message)
@@ -18,11 +20,11 @@ func AskForInput(message string) string {
 
         stringToReturn = text
 
+
         if valid {
             break
         }
     }
-
     return stringToReturn
 }
 
@@ -48,14 +50,17 @@ func GetCurrentDate() string {
 }
 
 func StringToBoolean(value string) bool {
-    // wait you're not suposed to indent this? This just feels wrong, but hey
-    // if the go people say so I guess
+    // Remove ascii 10 (new line feed) at the end of the line so that the case
+    // statement works
+    value = value[:len(value)-1]
+
     switch value {
     case "yes", "y":
         return true
     case "no", "n":
         return false
+    default:
+        log.Fatal("Sorry there was an error, please try again: StringToBoolean")
+        return false
     }
-
-    return false
 }
