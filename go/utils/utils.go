@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"time"
+
+	"github.com/yonikosiner/python-deez-nuts-with-sea-men/pkg/user"
 )
 
 func AskForInput(message string) string {
@@ -63,4 +65,8 @@ func StringToBoolean(value string) bool {
         log.Fatal("Sorry there was an error, please try again: StringToBoolean")
         return false
     }
+}
+
+func GetFullName(user user.User) string {
+    return fmt.Sprintf("%s %s", user.Name.FirstName, user.Name.LastName)
 }
