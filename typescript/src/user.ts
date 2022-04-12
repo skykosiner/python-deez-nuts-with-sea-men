@@ -31,9 +31,9 @@ export default class User implements IUser {
 
         if (this.volunteer) {
             // Select a random choice from the enum
-             const enumValues = Object.keys(AreasToVolunteer)
-            .map(n => Number.parseInt(n))
-            .filter(n => !Number.isNaN(n))
+            const enumValues = Object.keys(AreasToVolunteer)
+                .map(n => Number.parseInt(n))
+                .filter(n => !Number.isNaN(n))
 
             const randomIndex = Math.floor(Math.random() * enumValues.length)
             const randomEnumValue = enumValues[randomIndex]
@@ -43,7 +43,7 @@ export default class User implements IUser {
 
     public async addUser(user: IUser): Promise<string | void> {
         await this.getUserFile();
-        if(this.users.includes(user)) return "Sorry that user is allready signed up";
+        if (this.users.includes(user)) return "Sorry that user is allready signed up";
 
         this.users.push(user);
 

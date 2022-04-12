@@ -12,8 +12,25 @@ import (
 	"github.com/yonikosiner/python-deez-nuts-with-sea-men/utils"
 )
 
+func getCurrentDateObject() Date {
+	time := time.Now()
+	month := int(time.Month())
+	day := time.Day()
+	year := time.Year()
+
+	return Date{month, day, year}
+}
+
 func GetFullName(user User) string {
 	return fmt.Sprintf("%s %s", user.Name.FirstName, user.Name.LastName)
+}
+
+func SetSubcription(volunteer bool) Subscription {
+	if volunteer {
+		return Subscription{getCurrentDateObject()}
+	}
+
+	return Subscription{Date{0, 0, 0}}
 }
 
 func areaToVolunteer(volunteer bool) AreasToVolunteer {
@@ -50,7 +67,8 @@ func (u *User) NewUser() User {
 	volunteerBool := utils.StringToBoolean(volunteer)
 
 	fullname := &FullName{firstName, lastName}
-	user := &User{*fullname, utils.GetCurrentDate(), payingBool, volunteerBool, areaToVolunteer(volunteerBool)}
+
+	user := &User{*fullname, utils.GetCurrentDate(), payingBool, volunteerBool, areaToVolunteer(volunteerBool), SetSubcription(volunteerBool)}
 
 	return u.checkUserDup(*user)
 }
@@ -121,4 +139,20 @@ func (u *User) checkUserDup(user User) User {
 	}
 
 	return user
+}
+
+func (u *User) SubscriptionExpired() bool {
+	// Make sure that the pay is not set to 0
+	if u.Subscription.LastPaid.Day != 0 {
+		subscirption := u.Subscription
+		// Weird that the date is formated in 2006 not 1970 (the start of time, well at least it is to computers)
+		today := time.Now()
+		if subscirption.LastPaid.Month < int(today.Month()) && subscirption.LastPaid.Day < today.Day() && subscirption.LastPaid.Year < today.Year() {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	return false
 }
