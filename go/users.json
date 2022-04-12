@@ -1,3 +1,1 @@
-{"name":{"firstName":"yoni\n","lastName":"kosiner\n"},"signUpDate":"10-04-22","paying":true,"volunteer":true,"AreaToVolunteer":3}
-{"name":{"firstName":"duck\n","lastName":"booba\n"},"signUpDate":"10-04-22","paying":true,"volunteer":true,"AreaToVolunteer":3}
-{"name":{"firstName":"tejst\n","lastName":"test2\n"},"signUpDate":"11-04-22","paying":true,"volunteer":true,"AreaToVolunteer":1}
+{"name":{"firstName":"yoni\n","lastName":"kosiner\n"},"signUpDate":"12-04-22","paying":true,"volunteer":true,"AreaToVolunteer":2,"subscription":{"last_paid":{"month":3,"day":11,"year":2021}}}

@@ -13,10 +13,10 @@ import (
 )
 
 func getCurrentDateObject() Date {
-	time := time.Now()
-	month := int(time.Month())
-	day := time.Day()
-	year := time.Year()
+	currentTime := time.Now()
+	month := int(currentTime.Month())
+	day := currentTime.Day()
+	year := currentTime.Year()
 
 	return Date{month, day, year}
 }
