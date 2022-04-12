@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/yonikosiner/python-deez-nuts-with-sea-men/pkg/members"
+	"github.com/yonikosiner/python-deez-nuts-with-sea-men/pkg/sponsor"
 	"github.com/yonikosiner/python-deez-nuts-with-sea-men/pkg/user"
 	"github.com/yonikosiner/python-deez-nuts-with-sea-men/utils"
 )
@@ -12,6 +13,7 @@ import (
 func main() {
 	var u *user.User
 	var m *members.Members
+	var s *sponsor.Sponser
 
 	for {
 		input := utils.AskForInput(`S to sign up
@@ -42,6 +44,13 @@ C to exit`)
 			fmt.Println(m.GetAreaOfVolunteer(user.PaintingDecorating))
 		case "$":
 			fmt.Println(m.GetNonPayedMembers())
+		case "£":
+			fmt.Println(m.SubscriptionExpired())
+		case "N":
+			sponser := s.NewSponser()
+			s.SaveSponsor(sponser)
+		case "L":
+			fmt.Println(s.GetSponers())
 		case "C":
 			os.Exit(0)
 		}

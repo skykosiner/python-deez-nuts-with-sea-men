@@ -9,7 +9,7 @@ import (
 )
 
 func AskForInput(message string) string {
-	stringToReturn := ""
+	var stringToReturn string
 
 	for {
 		reader := bufio.NewReader(os.Stdin)

@@ -54,3 +54,16 @@ func (m *Members) GetAreaOfVolunteer(area user.AreasToVolunteer) []string {
 
 	return volunteers
 }
+
+func (m *Members) SubscriptionExpired() []string {
+	members := m.GetMembers()
+	var expried []string
+
+	for _, value := range members {
+		if value.SubscriptionExpired() {
+			expried = append(expried, user.GetFullName(value))
+		}
+	}
+
+    return expried
+}
