@@ -24,7 +24,6 @@ class Subscription:
 
 @dataclass
 class User:
-    # TODO: add in yearly subscription logic
     name: fullName
     sign_up_date: Date
     paying: bool

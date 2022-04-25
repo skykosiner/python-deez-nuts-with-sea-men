@@ -33,7 +33,7 @@ func SetSubcription(volunteer bool) Subscription {
 	return Subscription{Date{0, 0, 0}}
 }
 
-func areaToVolunteer(volunteer bool) AreasToVolunteer {
+func getAreaToVolunteer(volunteer bool) AreasToVolunteer {
 	if volunteer {
 		areas := [3]string{"EntranceGate", "GiftShop", "PaintingDecorating"}
 
@@ -68,7 +68,7 @@ func (u *User) NewUser() User {
 
 	fullname := &FullName{firstName, lastName}
 
-	user := &User{*fullname, utils.GetCurrentDate(), payingBool, volunteerBool, areaToVolunteer(volunteerBool), SetSubcription(volunteerBool)}
+	user := &User{*fullname, utils.GetCurrentDate(), payingBool, volunteerBool, getAreaToVolunteer(volunteerBool), SetSubcription(volunteerBool)}
 
 	return u.checkUserDup(*user)
 }

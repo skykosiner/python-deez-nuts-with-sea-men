@@ -63,3 +63,13 @@ func StringToBoolean(value string) bool {
 		return false
 	}
 }
+
+func Contains(s []interface{}, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
+}
